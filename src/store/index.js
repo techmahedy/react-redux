@@ -1,31 +1,19 @@
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
+import personReducer from './reducers/personReducer';
+import gameReducer from './reducers/gameReducer';
+import userReducer from './reducers/userReducer';
+import thunk from 'redux-thunk';
 
-import {combineReducers, createStore} from 'redux';
-const personReducer = (state = {},{type,payload}) => {
-  // console.log(actions)
-  if(type === 'UPDATE_PERSON'){
-    return {name:payload}
-  }
-  return state;
-}
-
-const gameReducer = (state = {},{type,payload}) => {
-  // console.log(actions)
-  if(type === 'UPDATE_GAME'){
-    return {name:payload}
-  }
-  return state;
-}
-
-const allReducer = combineReducers({game:gameReducer,person:personReducer});
+const allReducer = combineReducers({game:gameReducer,person:personReducer,users:userReducer});
 
 const InitialStates = {
+  person: {name:'Mahedi'},
   game: {name:'Football'},
-  person: {name:'Mahedi'}
+  users: []
 } 
-const store = createStore(allReducer,InitialStates);
-console.log(store.getState())
 
-store.dispatch({type:'UPDATE_PERSON',payload:'hasan'})
-console.log(store.getState())
+const middleware  = [thunk];
+
+const store = createStore(allReducer,InitialStates,compose(applyMiddleware(...middleware),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 
 export default store;
