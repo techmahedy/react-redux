@@ -1,6 +1,7 @@
 import './App.css';
 import fetch_user from './store/actions/userAction';
 import { connect, useSelector, useDispatch} from 'react-redux';
+import HookCounterSix from './components/HookCounterSix';
 
 function App(props) {
   const users = useSelector(state => state.users);
@@ -13,6 +14,7 @@ function App(props) {
         users.length === 0 ? <p>No user found!</p> :
         users.map(user => <p key={user.id}>{user.first_name}</p>) 
       }
+      <HookCounterSix/>
     </div>
   );
 }
